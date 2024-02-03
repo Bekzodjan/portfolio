@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { actions } from "./redux/reducer";
-import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import Rodal from "rodal";
 import "rodal/lib/rodal.css";
 import Loading from "./Loading";
@@ -16,36 +16,39 @@ export const App = (props) => {
   }, []);
 
   return (
-    <div className="p-2">
+    <div className="">
       {props.loading ? (
         <Loading />
       ) : (
         <div>
+          <div className="w-50 mx-auto d-flex justify-content-end mb-2">
           <button
             onClick={props.changeModal}
-            className="btn btn-secondary mb-2"
+            className="btn my-btn_ btn-success w-25 "
           >
-            Add video
+            +
           </button>
-          <div style={{ gap: "1%" }} className="d-flex w-100 flex-wrap mt-3">
+          </div>
+          <div className="p-4 d-flex f-box_ gap-3 flex-wrap w-100 container">
             {props.videos.map((itm, i) => {
               return (
                 <div
-                  style={{ width: "16%" }}
-                  className="card cursor-pointer p-1 justify-end"
+                  className="border p-2 _box"
                   key={itm.id}
                 >
-                  <h1
-                    onClick={() => props.openInfo(itm)}
-                    className="text-3xl m-5 text-center"
+                  <h5
+                    
+                    className="text-center text-xl font-medium leading-tight mb-2"
                   >
                     {itm.name === "" ? "undefined" : itm.name}
-                  </h1>
+                  </h5>
+                  <h6 className="text-center mb-3 text-base font-medium leading-tight">There are <span className="text-danger">{itm.videos.length}</span> videos in this lesson</h6>
+                  <p onClick={() => props.openInfo(itm)} className="text-primary mb-4">show click</p>
                   <button
                     onClick={() => props.deleteItmCard(itm.id)}
                     className="btn btn-danger"
                   >
-                    delete
+                    Delete Lesson
                   </button>
                 </div>
               );
@@ -53,7 +56,7 @@ export const App = (props) => {
           </div>
           <Rodal
             visible={props.isOpen}
-            height={"auto"}
+            className="overflow-scroll"
             onClose={props.changeModal}
           >
             <form
@@ -62,6 +65,7 @@ export const App = (props) => {
               )}
             >
               <input
+              placeholder="lesson name"
                 {...register("name")}
                 className="form-control mb-2 mt-4"
                 type="text"
